@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situs Kelas 7C SMPN 169 - Final</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Gaya Dasar dan Background */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4b0082 0%, #004d99 100%); 
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            padding-bottom: 50px; 
+        }
+
+        /* Container Utama Mirip Design Card */
+        .main-container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.15); 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 30px;
+            text-align: center;
+        }
+
+        /* Header Kelas */
+        header { margin-bottom: 30px; }
+        header h1 {
+            font-size: 2.5em; font-weight: 800; letter-spacing: 2px;
+            margin-bottom: 5px; color: #ffcc00; 
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+        header p { font-size: 1.2em; margin: 0; color: #ddd; }
+        
+        /* Styling FOTO GRUP */
+        .group-photo {
+            width: 100%; max-height: 250px; overflow: hidden;
+            border-radius: 15px; margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .group-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* Grid Tombol (Telah disederhanakan) */
+        .link-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .link-grid-bottom {
+             display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px;
+            margin-top: 15px; 
+        }
+        
+        .link-card {
+            background: rgba(255, 255, 255, 0.2); border-radius: 15px;
+            padding: 20px; cursor: pointer;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+            text-decoration: none; color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; min-height: 100px;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px); background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .link-card i { font-size: 2em; margin-bottom: 10px; }
+        .link-card span { font-weight: 600; font-size: 1.1em; }
+        .link-card small { font-size: 0.8em; margin-top: 5px; opacity: 0.8; }
+        
+        /* Modal Content Styling */
+        .modal-content {
+            background: #fff; padding: 20px; border-radius: 10px;
+            color: #333; max-height: 80vh; overflow-y: auto;
+            text-align: left; width: 90%; max-width: 800px; margin: 20px auto;
+        }
+        
+        #pr-editor {
+            width: 100%; min-height: 200px; padding: 10px;
+            border: 1px solid #ccc; border-radius: 5px;
+            font-size: 1em; margin-bottom: 15px;
+            box-sizing: border-box; 
+        }
+        #save-pr-btn {
+            background-color: #28a745; color: white;
+            padding: 10px 20px; border: none; border-radius: 5px;
+            cursor: pointer; font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        #save-pr-btn:hover { background-color: #1e7e34; }
+
+
+        #schedule-table { width: 100%; border-collapse: collapse; margin-bottom: 15px;}
+        #schedule-table th, #schedule-table td { border: 1px solid #ddd; padding: 8px; font-size: 0.9em; text-align: left; }
+        #schedule-table th { background-color: #004d99; color: white; }
+        .siswa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .siswa-grid p { background-color: #f0f0f0; padding: 8px; border-left: 3px solid #004d99; border-radius: 4px; margin: 0; font-size: 0.9em; }
+        .modal-tabs { display: flex; gap: 5px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px;}
+        .modal-tabs .tab-button { padding: 8px 12px; border: none; background-color: #ccc; cursor: pointer; border-radius: 5px; color: #333; flex-shrink: 0; }
+        .modal-tabs .tab-button.active { background-color: #004d99; color: white; }
+        
+        /* Styling untuk Info Seragam dan Piket (digabung) */
+        .info-box { 
+            margin-top: 15px; padding: 10px; border: 1px dashed #004d99; border-radius: 5px; 
+            background-color: #f9f9f9; font-size: 0.95em;
+        }
+        .info-box strong { color: #d9534f; }
+        .info-box h4 { margin-top: 10px; margin-bottom: 5px; color: #004d99; }
+        .info-box .piket-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 5px; margin-top: 5px;}
+        .info-box .piket-grid p { margin: 0; background-color: #e6f0ff; padding: 5px; border-radius: 3px; font-size: 0.9em;}
+
+
+        /* Modal Dasar */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); display: none; 
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .overlay.visible { display: flex; }
+        .close-btn { float: right; font-size: 28px; font-weight: bold; cursor: pointer; color: #333; }
+        .close-btn:hover { color: #f00; }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1>7C</h1>
+            <p>SMPN 169 - Tahun Ajaran 2025/2026</p>
+            <p>WELCOME EVERYONE!</p>
+        </header>
+
+        <div class="group-photo">
+            <img src="group_photo_7c.jpg" alt="Foto Bersama Kelas 7C"> 
+        </div>
+
+        <div class="link-grid">
+            <a class="link-card" href="#" onclick="showModal('jadwal')">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Jadwal Pelajaran & Piket</span>
+                <small>Lihat hari, jam, seragam, dan piket!</small>
+            </a>
+            
+            <a class="link-card" href="#" onclick="showModal('siswa')">
+                <i class="fas fa-users"></i>
+                <span>Anggota Kelas</span>
+                <small>Daftar 36 siswa</small>
+            </a>
+        </div>
+        
+        <div class="link-grid-bottom">
+            <a class="link-card" href="#" onclick="showModal('pr')" style="grid-column: span 2;">
+                <i class="fas fa-pencil-alt"></i>
+                <span>PR/Tugas Harian</span>
+                <small>Info tugas terbaru!</small>
+            </a>
+        </div>
+        
+        <div style="margin-top: 15px;">
+            <a class="link-card" href="mailto:kelas7c@smpn169.sch.id" style="width: 100%; max-width: none;">
+                <i class="fas fa-envelope"></i>
+                <span>Kontak Wali Kelas</span>
+                <small>Ibu Maryati</small>
+            </a>
+        </div>
+        
+    </div>
+    
+    <div id="modalOverlay" class="overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            
+            <div id="modalJadwal" style="display:none;">
+                <div class="modal-tabs">
+                    <button class="tab-button" data-day="Senin">Senin</button>
+                    <button class="tab-button" data-day="Selasa">Selasa</button>
+                    <button class="tab-button" data-day="Rabu">Rabu</button>
+                    <button class="tab-button" data-day="Kamis">Kamis</button>
+                    <button class="tab-button" data-day="Jumat">Jumat</button>
+                </div>
+                <table id="schedule-table"></table>
+                
+                <div class="info-box" id="dailyInfoBox"></div> 
+            </div>
+            
+            <div id="modalSiswa" style="display:none;">
+                <div class="siswa-grid"></div>
+            </div>
+
+            <div id="modalPR" style="display:none;">
+                <p><strong>Edit dan simpan daftar PR/Tugas di bawah ini. Data akan tersimpan di browser Anda.</strong></p>
+                <textarea id="pr-editor"></textarea>
+                <button id="save-pr-btn" onclick="savePR()">Simpan Tugas (PR)</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- DATA JAVASCRIPT LENGKAP ---
+
+        const guru = {
+            'Bu Siti': 'Bu Siti', 'Bu Indri': 'Bu Indri', 'Pak Shofiyan': 'Pak Shofiyan',
+            'Pak Daud': 'Pak Daud', 'Pak Oky': 'Pak Oky', 'Bu Ernie': 'Bu Ernie',
+            'Mis Maryati': 'Mis Maryati', 'Pak Azhari': 'Pak Azhari', 'Bu Mawar': 'Bu Mawar',
+            'Bu Ella': 'Bu Ella', 'Pak Mocha': 'Pak Mocha', 
+        };
+
+        const seragamData = {
+            'Senin': 'Putih Biru (Atribut Lengkap)',
+            'Selasa': 'Putih Biru (Atribut Lengkap) dan membawa Baju Olahraga',
+            'Rabu': 'Baju Olahraga dan membawa Baju Ganti Pramuka (Atribut Lengkap)',
+            'Kamis': 'Putih Biru (Atribut Lengkap)',
+            'Jumat': 'Batik/Baju Kurung'
+        };
+
+        const scheduleData = {
+            'Senin': [
+                { waktu: '07:30 - 08:50', mapel: 'Bahasa Indonesia', guru: guru['Bu Siti'] },
+                { waktu: '08:50 - 09:30', mapel: 'Istirahat I', guru: '-' }, 
+                { waktu: '09:30 - 11:20', mapel: 'IPS', guru: guru['Pak Oky'] },
+                { waktu: '11:20 - 13:00', mapel: 'Istirahat', guru: '-' },
+                { waktu: '13:00 - 14:05', mapel: 'Matematika', guru: guru['Bu Indri'] }
+            ],
+            'Selasa': [
+                { waktu: '07:30 - 08:50', mapel: 'PKN', guru: guru['Pak Mocha'] }, 
+                { waktu: '08:50 - 09:30', mapel: 'Istirahat I', guru: '-' }, 
+                { waktu: '09:30 - 11:40', mapel: 'PJOK', guru: guru['Pak Daud'] },
+                { waktu: '11:40 - 13:00', mapel: 'Istirahat', guru: '-' },
+                { waktu: '13:00 - 14:05', mapel: 'IPS', guru: guru['Pak Oky'] }
+            ],
+            'Rabu': [
+                { waktu: '07:30 - 08:50', mapel: 'Matematika', guru: guru['Bu Indri'] },
+                { waktu: '08:50 - 09:30', mapel: 'Istirahat I', guru: '-' }, 
+                { waktu: '09:30 - 10:40', mapel: 'IPA', guru: guru['Bu Ernie'] },
+                { waktu: '10:40 - 11:40', mapel: 'BK', guru: guru['Bu Ella'] }, 
+                { waktu: '11:40 - 13:00', mapel: 'Istirahat', guru: '-' },
+                { waktu: '13:00 - 14:05', mapel: 'IPS', guru: guru['Pak Oky'] }
+            ],
+            'Kamis': [
+                { waktu: '07:30 - 08:50', mapel: 'IPA', guru: guru['Bu Ernie'] },
+                { waktu: '08:50 - 09:30', mapel: 'Istirahat I', guru: '-' }, 
+                { waktu: '09:30 - 10:40', mapel: 'Bahasa Inggris', guru: guru['Mis Maryati'] },
+                { waktu: '10:40 - 11:40', mapel: 'Informatika', guru: guru['Pak Azhari'] },
+                { waktu: '11:40 - 13:00', mapel: 'Istirahat', guru: '-' },
+                { waktu: '13:00 - 14:05', mapel: 'Bahasa Inggris', guru: guru['Mis Maryati'] }
+            ],
+            'Jumat': [
+                { waktu: '07:30 - 09:00', mapel: 'PAI', guru: guru['Pak Shofiyan'] },
+                { waktu: '09:00 - 09:30', mapel: 'Istirahat I', guru: '-' },
+                { waktu: '09:30 - 11:30', mapel: 'SBK', guru: guru['Bu Mawar'] },
+                { waktu: '11:30 - Selesai', mapel: "Jum'at Bersih/Pulang", guru: '-' }
+            ]
+        };
+
+        const studentList = [
+            "ADHWA FAJRI ANNADA", "AFRILLIA SHAFIRA", "AHMAD KAYSAN ARRASYID", "AIRA SENJA PANESYAH (Sekretaris II)",
+            "ALVINO BRADY KURNIAWAN", "ANDRI YANSAH", "ARDELLA NATHANIA", "ARSHAFIRA ANZA RAISA",
+            "DAFFA ANDITO", "DZAKI FATHULLAH", 
+            "ELNOV FAZILA PUTRI MASHUDI (Ketua)", 
+            "EZRA AL FAUZI KURNIAWAN", "GEISA MAYRANI", "INDRI YANI", "INTAN AYUNINGTYAS", 
+            "JIHAN AULIA PUTRI (Bendahara)", 
+            "GILANG HERNANDO PUTRA", "MARSYA STEVANI KEYLANI HASANAH", "MARVEL CHARLY SETIAWAN",
+            "MUCHAMAD AZZAM HANIF", "MUHAMMAD ARDI FIRMANSYAH", 
+            "MUHAMMAD FAUZAN (Wakil Ketua)", 
+            "MUHAMMAD RENGGA LAULINGGA", "NADIA PUTRI KHAERUNNISA", "NURIANAH", "PUDJA HAMBALI",
+            "RAFAEL KIN", "RAFI NUR MUHAMAD APRIANSYAH", "RAZATIO MEAZZA", "RIFKY HARI SAPUTRA",
+            "RINJANI AULIA", 
+            "SARAH AULIA ZAHIRA (Sekretaris I)", 
+            "SEKAR MIFTAHUL JANNAH", 
+            "SHIFA AULIA", "TANIA PUTRI", "TSABIT NARYAMA"
+        ];
+        
+        const picketData = {
+            'Senin': ["Nada", "Rafael", "Kaysan", "Ardi", "Alvino", "Geisha", "Indri"],
+            'Selasa': ["Afrilia", "Aira", "Andri", "Ardella", "Dzaki", "Ezra", "Intan"],
+            'Rabu': ["Elnov", "Nurjanah", "Razatio", "Rifky", "Tania", "Jihan", "Daffa"],
+            'Kamis': ["Azzam", "Gilang", "Tsabit", "Marsya", "Nadia", "Pudja", "Rinjani"],
+            'Jumat': ["Sarah", "Sekar", "Syifa", "Rengga", "Rafi", "Fauzan", "Marvel"]
+        };
+
+
+        // --- FUNGSI PR (Menggunakan Local Storage) ---
+        const PR_STORAGE_KEY = 'kelas7c_pr_list';
+        function loadPR() {
+            return localStorage.getItem(PR_STORAGE_KEY) || 
+                   "Tugas saat ini:\n- Contoh: IPA: Bawa bahan untuk percobaan kalor\n- Masukkan tugas/PR di sini!";
+        }
+
+        function savePR() {
+            const prText = document.getElementById('pr-editor').value;
+            localStorage.setItem(PR_STORAGE_KEY, prText);
+            alert('Daftar Tugas (PR) berhasil disimpan di browser Anda!');
+            hideModal();
+        }
+
+        // --- FUNGSI JADWAL PELAJARAN (DIGABUNGKAN DENGAN PIKET & SERAGAM) ---
+        function showSchedule(day) {
+            const table = document.getElementById('schedule-table');
+            const infoBox = document.getElementById('dailyInfoBox');
+            const data = scheduleData[day];
+            const seragam = seragamData[day];
+            const piketMembers = picketData[day] || [];
+
+            // 1. Bangun Tabel Jadwal
+            let tableHTML = `
+                <tr>
+                    <th>Waktu</th>
+                    <th>Mata Pelajaran</th>
+                    <th>Guru Pengajar</th>
+                </tr>
+            `;
+
+            if (data) {
+                data.forEach(item => {
+                    tableHTML += `
+                        <tr>
+                            <td>${item.waktu}</td>
+                            <td>${item.mapel}</td>
+                            <td>${item.guru}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                 tableHTML += `<tr><td colspan="3">Data jadwal hari ${day} tidak tersedia.</td></tr>`;
+            }
+
+            table.innerHTML = tableHTML;
+            
+            // 2. Bangun Kotak Info (Seragam dan Piket)
+            let piketGridHTML = piketMembers.map(member => `<p>${member}</p>`).join('');
+            
+            infoBox.innerHTML = `
+                <strong>Seragam Hari ${day}:</strong> ${seragam}
+                
+                <h4><i class="fas fa-broom"></i> Anggota Piket Harian:</h4>
+                <div class="piket-grid">
+                    ${piketGridHTML}
+                </div>
+            `;
+
+            // 3. Atur tombol tab aktif
+            document.querySelectorAll('#modalJadwal .tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            const activeTabButton = document.querySelector(`#modalJadwal .tab-button[data-day="${day}"]`);
+            if (activeTabButton) {
+                activeTabButton.classList.add('active');
+            }
+        }
+
+        // --- FUNGSI ANGGOTA SISWA ---
+        function displayStudents() {
+            const studentGrid = document.querySelector('#modalSiswa .siswa-grid');
+            let studentHTML = '';
+            
+            studentList.forEach((student, index) => {
+                const absen = index + 1;
+                studentHTML += `<p>${absen}. ${student}</p>`;
+            });
+
+            studentGrid.innerHTML = studentHTML;
+        }
+        
+        // --- FUNGSI UTAMA SHOW MODAL ---
+        function showModal(contentType) {
+            const overlay = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            // Sembunyikan semua konten modal
+            document.getElementById('modalJadwal').style.display = 'none';
+            document.getElementById('modalSiswa').style.display = 'none';
+            document.getElementById('modalPR').style.display = 'none'; 
+            
+            if (contentType === 'jadwal') {
+                modalTitle.textContent = "Jadwal Pelajaran, Piket & Seragam Kelas 7C";
+                document.getElementById('modalJadwal').style.display = 'block';
+                showSchedule('Senin'); // Tampilkan default Senin
+            } else if (contentType === 'siswa') {
+                modalTitle.textContent = "Daftar Anggota Kelas 7C (36 Siswa)";
+                document.getElementById('modalSiswa').style.display = 'block';
+                displayStudents();
+            } else if (contentType === 'pr') {
+                modalTitle.textContent = "Daftar PR/Tugas Harian";
+                document.getElementById('modalPR').style.display = 'block';
+                document.getElementById('pr-editor').value = loadPR(); 
+            }
+
+            // Menampilkan overlay modal
+            overlay.classList.add('visible');
+        }
+
+        function hideModal() {
+            document.getElementById('modalOverlay').classList.remove('visible');
+        }
+
+        // --- INISIALISASI DAN EVENT LISTENER ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const modalJadwalTabs = document.querySelector('#modalJadwal .modal-tabs');
+            if (modalJadwalTabs) {
+                 modalJadwalTabs.addEventListener('click', (event) => {
+                    const button = event.target.closest('.tab-button');
+                    if (button) {
+                        const day = button.getAttribute('data-day');
+                        showSchedule(day);
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
