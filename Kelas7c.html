@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situs Kelas 7C SMPN 169 - Final</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1>7C</h1>
+            <p>SMPN 169 - Tahun Ajaran 2025/2026</p>
+            <p>WELCOME EVERYONE!</p>
+        </header>
+
+        <div class="group-photo">
+            <img src="group_photo_7c.jpg" alt="Foto Bersama Kelas 7C"> 
+        </div>
+
+        <div class="link-grid">
+            <a class="link-card" href="#" onclick="showModal('jadwal')">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Jadwal Pelajaran & Piket</span>
+                <small>Lihat hari, jam, seragam, dan piket!</small>
+            </a>
+            
+            <a class="link-card" href="#" onclick="showModal('siswa')">
+                <i class="fas fa-users"></i>
+                <span>Anggota Kelas</span>
+                <small>Daftar 36 siswa</small>
+            </a>
+        </div>
+        
+        <div class="link-grid-bottom">
+            <a class="link-card" href="#" onclick="showModal('pr')" style="grid-column: span 2;">
+                <i class="fas fa-pencil-alt"></i>
+                <span>PR/Tugas Harian</span>
+                <small>Info tugas terbaru!</small>
+            </a>
+        </div>
+        
+        <div style="margin-top: 15px;">
+            <a class="link-card" href="mailto:kelas7c@smpn169.sch.id" style="width: 100%; max-width: none;">
+                <i class="fas fa-envelope"></i>
+                <span>Kontak Wali Kelas</span>
+                <small>Ibu Maryati</small>
+            </a>
+        </div>
+        
+    </div>
+    
+    <div id="modalOverlay" class="overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            
+            <div id="modalJadwal" style="display:none;">
+                <div class="modal-tabs">
+                    <button class="tab-button" data-day="Senin">Senin</button>
+                    <button class="tab-button" data-day="Selasa">Selasa</button>
+                    <button class="tab-button" data-day="Rabu">Rabu</button>
+                    <button class="tab-button" data-day="Kamis">Kamis</button>
+                    <button class="tab-button" data-day="Jumat">Jumat</button>
+                </div>
+                <table id="schedule-table"></table>
+                
+                <div class="info-box" id="dailyInfoBox"></div> 
+            </div>
+            
+            <div id="modalSiswa" style="display:none;">
+                <div class="siswa-grid"></div>
+            </div>
+
+            <div id="modalPR" style="display:none;">
+                <p><strong>Edit dan simpan daftar PR/Tugas di bawah ini. Data akan tersimpan di browser Anda.</strong></p>
+                <textarea id="pr-editor"></textarea>
+                <button id="save-pr-btn" onclick="savePR()">Simpan Tugas (PR)</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+  </html>
+                      
